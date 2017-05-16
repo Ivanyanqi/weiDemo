@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ivan.mapper.base.TAccessTokenMapper" >
+  <resultMap id="BaseResultMap" type="cn.ivan.model.base.TAccessToken" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="access_token" property="access_token" jdbcType="VARCHAR" />
+    <result column="expires_in" property="expires_in" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="is_expires" property="isExpires" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, access_token, expires_in, create_time, is_expires
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_access_token
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_access_token
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ivan.model.base.TAccessToken" >
+    insert into t_access_token (id, access_token, expires_in, 
+      create_time, is_expires)
+    values (#{id,jdbcType=INTEGER}, #{access_token,jdbcType=VARCHAR}, #{expires_in,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{isExpires,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ivan.model.base.TAccessToken" >
+    insert into t_access_token
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="access_token != null" >
+        access_token,
+      </if>
+      <if test="expires_in != null" >
+        expires_in,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isExpires != null" >
+        is_expires,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="access_token != null" >
+        #{access_token,jdbcType=VARCHAR},
+      </if>
+      <if test="expires_in != null" >
+        #{expires_in,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpires != null" >
+        #{isExpires,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ivan.model.base.TAccessToken" >
+    update t_access_token
+    <set >
+      <if test="access_token != null" >
+        access_token = #{access_token,jdbcType=VARCHAR},
+      </if>
+      <if test="expires_in != null" >
+        expires_in = #{expires_in,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpires != null" >
+        is_expires = #{isExpires,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ivan.model.base.TAccessToken" >
+    update t_access_token
+    set access_token = #{access_token,jdbcType=VARCHAR},
+      expires_in = #{expires_in,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      is_expires = #{isExpires,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateAll">
+    UPDATE t_access_token SET is_expires = 0 WHERE is_expires = 1
+  </update>
+
+  <delete id="deleteExpireToken">
+    DELETE FROM t_access_token WHERE is_expires = 0
+  </delete>
+
+  <select id="selectAccessToken" resultMap="BaseResultMap">
+    SELECT * FROM t_access_token WHERE is_expires = 1
+  </select>
+</mapper>
