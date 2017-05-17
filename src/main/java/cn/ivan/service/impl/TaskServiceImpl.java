@@ -32,9 +32,9 @@ public class TaskServiceImpl implements TaskService {
 
     static final int TRY_TIMES = 3;
 
-    private String appID = "wxbf11e53ee35d0b2f";
+    private String appID ;
 
-    private String appsecret = "9b23d899663c09d5473f1bab5d551480";
+    private String appsecret ;
 
     @Autowired
     private TAccessTokenMapper accessTokenMapper;
