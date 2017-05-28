@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <input type="text" id="message">
+    <button id="btn">发送</button><br>
+    <textarea id="textArea" cols="30" rows="5">
+
+    </textarea>
+
+
+
+</body>
+<script src="../js/jquery.min.js" ></script>
+<script type="text/javascript">
+    $(function () {
+        var ws = new WebSocket("ws://localhost:8010/ws/test");
+
+        //连接成功回调方法
+        ws.onopen = function (event) {
+            $("#textArea").append("open.....<br>");
+
+        }
+
+        // 接收消息回调的方法
+        ws.onmessage = function (event) {
+            $("#textArea").append(event.data + '<br>');
+
+        }
+
+        ws.onclose = function (event) {
+            $("#textArea").append('closed<br>');
+        }
+
+        $("#btn").click(function () {
+            ws.send($("#message").val());
+        });
+
+
+    });
+</script>
+</html>

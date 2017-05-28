@@ -1,10 +1,15 @@
 package cn.ivan.controller;
 
 import cn.ivan.annotation.LoginCheck;
+import cn.ivan.ws.MyWebSocket;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.websocket.Session;
+import java.io.IOException;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,7 +23,15 @@ public class TestController {
     @LoginCheck(anonymity = true)
     @RequestMapping(value = "/test",method = RequestMethod.GET)
     @ResponseBody
-    public String getMethod(){
+    public String getMethod() throws IOException, InterruptedException {
+        CopyOnWriteArraySet<Session> set = MyWebSocket.getSet();
+        for(Session s :set){
+            s.getBasicRemote().sendText("hello world");
+        }
+        Thread.sleep(10000);
+        for(Session s :set){
+            s.getBasicRemote().sendText("hello world");
+        }
         return "GET";
     }
 
