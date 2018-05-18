@@ -21,7 +21,7 @@
     <!-- 扫描包启动时 -->
     <context:component-scan base-package="cn.ivan.service"/>
     <task:executor id="executor" pool-size="5" />
-    <!-- 推荐配置线程池，若不配置多任务下会有问题。后面会详细说明单线程的问题 -->
+    <!-- 推荐配置线程池，若不配置多任务下会有问题 -->
     <!-- spring的定时任务默认是单线程，多个任务执行起来时间会有问题 -->
     <task:scheduler id="qbScheduler" pool-size="5"/>
     <!-- 开启这个配置，spring才能识别@Scheduled注解  -->

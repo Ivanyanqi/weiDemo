@@ -11,6 +11,6 @@
     <title>欢迎页面</title>
 </head>
 <body>
-    <jsp:forward page="${pageContext.request.contextPath}/toLoginPage"/>
+    <jsp:forward page="${pageContext.request.contextPath}/toWelPage"/>
 </body>
 </html>
